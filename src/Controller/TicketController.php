@@ -4,6 +4,7 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Service\CheckDate;
 use App\Entity\Ticket;
 use App\Entity\Calendar;
 use App\Entity\Rate;
@@ -13,7 +14,7 @@ class TicketController extends Controller
     /**
      * @Route({"en" : "/", "fr" : "/"}, name="home", requirements={"_locale": "en|fr"})
     */
-    public function index(Request $request)
+    public function index(Request $request, CheckDate $checkDate)
     {
         //Define DateTime Paris and Offset / UTC
         $locale = $request->getLocale();
@@ -27,6 +28,11 @@ class TicketController extends Controller
             $half_day = $request->request->get('half-day-button');
 
             if (! empty($dateVisit)) {
+                if (!$checkDate->check($dateVisit, $dateTimeParis)) {
+                    $this->addFlash('notice', "Bad date, please choose another date");
+
+                    return $this->redirectToRoute('home');
+                }
                 $ticket = new Ticket();
                 // Add date visit to ticket
                 $ticket->setDateVisit($dateVisit);
@@ -58,7 +64,7 @@ class TicketController extends Controller
         $repository = $this->getDoctrine()->getRepository(Calendar::class);
         $listDays = $repository->showDays();
 
-        $easterDate = easter_date();
+        $easterDate = $checkDate->getEasterDateYearCurrent();
 
         return $this->render('ticket/index.html.twig', array(
             'local' => $locale,
