@@ -1,0 +1,25 @@
+<div id="step-container">
+    <div class="title">{{ 'Buy your ticket for Le Louvre'|trans }}</div>
+    <div class="step">
+        <div class="date" {% if app.request.get('_route') == 'home' %}style="border: 2px #000 solid"{% endif %}>
+            <div class="step-step">{{ 'STEP'|trans }} 1</div>
+            <div class="step-title">{{ 'Choose the date'|trans }}</div>
+            <div class="step-logo"><img src="{{ asset('img/calendar.png') }}" alt="{{ 'Calendar'|trans }}"/></div>
+        </div>
+        <div class="visitor" {% if app.request.get('_route') == 'selectVisitor' %}style="border: 2px #000 solid"{% endif %}>
+            <div class="step-step">{{ 'STEP'|trans }} 2</div>
+            <div class="step-title">{{ 'Registration of visitors'|trans }}</div>
+            <div class="step-logo"><img src="{{ asset('img/visitor.png') }}" alt="{{ 'Visitor'|trans }}"/></div>
+        </div>
+        <div class="payment" {% if app.request.get('_route') == 'payment' %}style="border: 2px #000 solid"{% endif %}>
+            <div class="step-step">{{ 'STEP'|trans }} 3</div>
+            <div class="step-title">{{ 'Payment'|trans }}</div>
+            <div class="step-logo"><img src="{{ asset('img/payment.png') }}" alt="{{ 'Payment'|trans }}"/></div>
+        </div>
+        <div class="ticket" {% if app.request.get('_route') == 'showTicket' %}style="border: 2px #000 solid"{% endif %}>
+            <div class="step-step">{{ 'STEP'|trans }} 4</div>
+            <div class="step-title">{{ 'Your'|trans }}</div>
+            <div class="step-logo"><img src="{{ asset('img/ticket.png') }}" alt="Ticket"/></div>
+        </div>
+    </div>
+</div>

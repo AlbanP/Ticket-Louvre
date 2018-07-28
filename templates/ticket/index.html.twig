@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+
+	<div id="content" style="background : url({{ asset('img/louvre-date.jpg') }}) no-repeat; background-size: cover; background-position: center center;">
+
+		{{ include("ticket/step.html.twig") }}
+		
+		<div id="calendar-container" class="calendar">
+			<div id="date" class="datepicker" data-list-days="{{ list_days | json_encode }}" data-easter-day="{{ easter_date | json_encode }}" data-time-zone="{{ timeZoneOffset }}">
+				<div id="choose" class="day-half-day">
+					{% for message in app.flashes('notice') %}
+                        <div class="error-card">{{ message | trans }}</div>
+                    {% endfor %}
+					<div class="date">{{ 'Date :'| trans }} <span id="date-choose" data-date-choose="{{ dateVisit is empty ? "" : dateVisit | date('Y-m-d') }}">{% if dateVisit %} {{ dateVisit |localizeddate('none', 'none', null, null, 'EEEE d MMMM Y') }} {% endif %}</span></div>
+					<div class="place"> ({{ 'Available place :'| trans}} <span id="nb-places"></span>)</div>
+					<div class="form">
+						<form method="post" class="calendar-form">
+							<input type="hidden" name="date-select" value="{{ dateVisit is empty ? "" : dateVisit | date('Y-m-d') }}" id="date-select">
+							<input type="submit" name="half-day-button" value="{{ 'Half day from 14h'| trans }}" class="btn submit-day" id="button-half-day">
+							<input type="submit" name="day-button" value="{{ 'All day'| trans }}" class="btn submit-day" id="button-day">
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>	
+	
+		<div id="info-container">
+			<div class="legend">
+				<div class="legend-title"><div class="patern close"></div>{{ 'Close'| trans }}</div>
+				<div class="legend-title"><div class="patern noreservation"></div>{{ 'No reservation'| trans }}</div>
+				<div class="legend-title"><div class="patern full"></div>{{ 'Full'| trans }}</div>
+				<div class="legend-title"><div class="patern valid"></div>{{ 'Reservation available'| trans }}</div>
+			</div>
+			<div class="info">
+				<div class="tarif info-container">
+					<div class="title">{{ 'Price'| trans }}</div>
+					<div class="info-list">
+						<ul>
+							{% for rate in list_rate %}
+								<li>{{ rate.name | capitalize | trans }} : {{ rate.price / 100 }} € - {{ rate.description | trans }}</li>
+							{% endfor %}
+						</ul>
+					</div>
+				</div>
+				<div class="hours info-container">
+					<div class="title">{{ 'Opening hours'|trans }}</div>
+					<div class="info-list">
+						<ul>
+							<li>{{ 'Monday : 9 a.m. – 6 p.m.'| trans }} </li>
+							<li>{{ 'Tuesday : Closed.'| trans }} </li>
+							<li>{{ 'Wednesday : 9 a.m. – 9:45 p.m.'| trans }} </li>
+							<li>{{ 'Thursday : 9 a.m. – 6 p.m.'| trans }} </li>
+							<li>{{ 'Friday : 9 a.m. – 9:45 p.m.'| trans }} </li>
+							<li>{{ 'Saturday : 9 a.m. – 6 p.m.'| trans }} </li>
+							<li>{{ 'Sunday : 9 a.m. – 6 p.m.'| trans }} </li>
+							<li>{{ 'Rooms begin closing at 5:30 p.m., and at 9:30 p.m. on night openings.'| trans }} </li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	
+	</div>
+
+
+{% endblock %}
+
+{% block javascripts %}
+	<script src="{{ asset('build/home.js') }}"></script>
+{% endblock %}

@@ -2,11 +2,22 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}{{ 'Ticket Louvre' | trans }}{% endblock %}</title>
+        <link rel="icon" type="image/png" sizes="192x192"  href="{{ asset('img/android-icon-192x192.png') }}">
+        <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('img/favicon-32x32.png') }}">
+        <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('img/apple-icon-180x180.png') }}">
+        <meta name="msapplication-TileImage" content="{{ asset('img/ms-icon-144x144.png') }}">
+        <link rel="stylesheet" href="{{ asset('build/app.css') }}">
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
+        {{ include("ticket/header.html.twig") }}
+
+        {% block content %}{% endblock %}
+
+        {{ include("ticket/footer.html.twig") }}
+
         {% block javascripts %}{% endblock %}
+        <script src="{{ asset('build/app.js') }}"></script>
     </body>
 </html>

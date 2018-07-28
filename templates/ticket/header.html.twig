@@ -1,0 +1,13 @@
+<header>
+    {% if app.request.get('_route') == 'home' %}<img class="img-header" src="{{ asset('img/louvre-header.jpg') }}" alt="Ticket Louvre"/>{% endif %}
+    <div class="banner">
+        <div class="title">
+            <div><img class="logo" src="{{ asset('img/ticket-blanc.png') }}" alt="Ticket Louvre"/></div>
+            <div>Ticket Louvre</div>
+        </div>
+        <div id="local" class="flags" data-local="{{ local }}">
+            <a href="{{ path(app.request.get('_route'), {'_locale': 'fr'}) }}"><img src="{{ asset('img/blank.gif') }}" class="flag flag-fr" alt="Français" /></a>
+            <a href="{{ path(app.request.get('_route'), {'_locale': 'en'}) }}"><img src="{{ asset('img/blank.gif') }}" class="flag flag-gb" alt="English" /></a>
+        </div>
+    </div>
+</header>
