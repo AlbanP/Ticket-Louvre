@@ -5,6 +5,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Service\CheckDate;
+use App\Service\CalculVisitors;
+use App\Service\CheckNbVisitor;
 use App\Entity\Ticket;
 use App\Entity\Calendar;
 use App\Entity\Rate;
@@ -79,11 +81,12 @@ class TicketController extends Controller
     /**
     * @Route({"en" : "/visitors", "fr" : "/visiteurs"}, name="selectVisitor", requirements={"_locale": "en|fr"})
     */
-    public function selectVisitor(Request $request)
+    public function selectVisitor(Request $request, CalculVisitors $calculVisitors, CheckNbVisitor $checkNbVisitor)
     {
         $locale = $request->getLocale();
         $ticket = $request->getSession()->get('ticket');
         $dateVisit = $ticket->getDateVisit();
+        $nbVisitorDay = $checkNbVisitor->calculNbVisitorDay($dateVisit, $ticket->getNbVisitor());
 
         if (! $dateVisit) {
             return $this->redirectToRoute('home');
@@ -94,6 +97,7 @@ class TicketController extends Controller
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             // Check if have 1 or more visitor(s)
+            $ticketVisitor = $calculVisitors->getCalculVisitors($ticket);
             if ($ticket->getVisitors()->isEmpty()) {
 
                 $this->getFlashBag()->add('notice', "Sorry, but avaible place is full, try another day");
@@ -107,7 +111,8 @@ class TicketController extends Controller
         return $this->render('ticket/selectVisitor.html.twig', array(
                 'form' => $form->createView(),
                 'ticket' => $ticket,
-                'local' => $locale
+                'local' => $locale,
+                'nbVisitorDay' => $nbVisitorDay
             ));
     }
     /*

@@ -1,0 +1,57 @@
+#visitors-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .visitor-select{
+        #app_ticket_visitors{
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            &>div{
+                width: 210px;
+                background: rgba(255, 255, 255, 0.7);
+                border-radius: 10px;
+                color: black;
+                padding: 10px 20px 15px 20px;
+                margin: 20px 20px 0px 20px;
+            }
+            ul{
+                list-style-type: none;
+                padding: 0;
+                margin-top: 2px;
+                margin-bottom: 2px;
+                li{
+                    font-family: Arial, Helvetica, sans-serif;
+                    font-size: 12px;
+                    color: red;
+                }
+            }
+        }
+    }
+    .visitor-valid{
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 14px;
+        background: rgba(255, 255, 255, 0.7);
+        border-radius: 10px;
+        padding: 15px 20px 15px 20px;
+        margin-top: 15px;
+        margin-bottom: 20px;
+    }
+    .visitor-price{
+        text-align: right;;
+    }
+    .visitor-delete{
+        display: none;
+        text-align: center;
+        margin-top: 15px;
+        .btn-delete{
+            font-size: 12px!important;
+        }
+    }
+    .visitor-add{
+        display: none;
+        text-align: center;
+        margin-top: 15px;
+    }
+}
