@@ -1,0 +1,57 @@
+#step-container{
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    background: rgba(255, 255, 255, 0.7);
+    color: black;
+    padding-top: 15px;
+    padding-bottom: 20px;
+    .title{
+        text-align: center;
+        font-size: 22px;
+        margin-bottom: 10px;
+    }
+    .step{
+        display: flex;
+        justify-content: space-around;
+        font-family: Arial, Helvetica, sans-serif;
+        color: black;
+        font-weight: normal;
+        .date, .visitor, .payment, .ticket{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 15%;
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.75);
+            border-radius: 10px;
+            padding-top: 5px;
+            padding-bottom: 10px;
+            .step-step{
+                font-weight: bold;
+                font-size: 14px;
+            }
+            .step-title{
+                margin-top: 5px;
+                font-size: 16px;
+            }
+            .step-logo{
+                margin-top: auto;
+                img{
+                    display: block;
+                    width: 65%;
+                    height: 65%;
+                    margin: auto;
+                    max-width: 100px;
+                    max-height: 100px;
+                }
+            }
+        }
+        .active{
+            background-color: rgba(189, 57, 17, 0.6);
+            border: solid black 2px;
+        }
+        .valid{
+            background-color: rgba(142, 197, 174, 0.6);
+        }
+    }
+}

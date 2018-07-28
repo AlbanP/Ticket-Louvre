@@ -1,0 +1,136 @@
+#calendar-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    #date{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    #error-date{
+        display: none;
+        color: red;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 14px;
+        font-weight: bold;
+    }
+    .day-half-day{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 14px;
+        text-align: center;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.85);
+        margin-top: 5px;
+        margin-bottom: 5px;
+        border-radius: 10px;
+        .date{
+            font-size: 18px;
+            font-weight: bold;
+            padding : 5px 10px 5px 10px;
+        }
+        .place{
+            font-size: 12px;
+            font-style: italic;
+        }
+        .form{
+            padding: 5px 10px 5px 10px;
+        }
+    }
+}
+#info-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.75);
+    font-family: Arial, Helvetica, sans-serif;
+    .legend{
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        align-items: center;
+        margin-bottom: 10px;
+        .patern{
+            display: inline-block;
+            width: 15px;
+            height: 15px;
+            margin-right: 5px; 
+        }
+        $opacity : 0.5;
+        .legend-title{
+            font-size: 12px;
+            margin-left: 15px;
+            margin-right: 15px;
+            margin-top: 10px;
+        }
+        .full{
+            background: $full;
+            opacity: $opacity;
+        }
+        .close{
+            background: $close;
+            opacity: $opacity;
+        }
+        .valid{
+            background: $valid;
+        }
+        .noreservation{
+            background: $noreservation;
+            opacity: $opacity;
+        }
+    }
+    .info{
+        display: flex;
+        justify-content: space-around;
+        align-items: flex-start;
+        width: 100%;
+        flex-wrap: wrap;
+        .info-container{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-left: 25px;
+            margin-right: 25px;
+            .title{
+                font-size: 14px;
+                font-weight: bold;
+                text-align: center;
+            }
+            ul{
+                font-size: 12px;
+                list-style-type: none;
+                margin-top: 5px;
+                padding: 0;
+            }
+        }
+    }
+}
+.close span{
+    //color: white!important;
+    background-color: $close!important;
+}
+.noreservation span{
+    color: white !important;
+    background-color: $noreservation !important; 
+}
+.full span{
+    color: white!important;
+    background-color: $full !important;
+}
+.valid a{
+    color: white!important;;
+    background-color: $valid !important;
+}
+.ui-datepicker-current-day .ui-state-active{
+    color: white!important;;
+    background-color: rgb(3, 49, 3)!important;
+    border-color: rgb(3, 49, 3)!important;
+}
+.select-day{
+    color: black;
+}
