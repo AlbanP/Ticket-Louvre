@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+
+	<div id="content" style="background : url({{ asset('img/louvre-payment.jpg') }}) no-repeat; background-size: cover; background-position: center center;">
+
+		{{ include("ticket/step.html.twig") }}
+
+        <div id="payment-container">
+			<div class="date-visit">
+				<div class="date-day" data-date-visit="{{ ticket.dateVisit | date('Y/m/d') }}">{{ 'Visit day : ' |trans }}{{ ticket.dateVisit|localizeddate('none', 'none', null, null, 'EEEE d MMMM Y') }} {% if (ticket.halfDay == 1) %} {{ 'for half-day'|trans}} {% else %} {{ 'for all day'|trans }} {% endif %}</div>
+				<div><a href="{{ path('selectVisitor') }}#visitors" class="btn">{{ 'Back to visitor registration'| trans }}</a></div>
+			</div>
+            <div class="payment-sub-container">
+                <div class="summery">
+                    <div class="title">{{ 'Summery' | trans }}</div>
+                    <div class="nb-visitor">{{ 'Number of visitor' | trans }} : <b>{{ ticket.nbVisitor }}</b></div>
+                    <div>
+                        {% for visitor in ticket.visitors %}
+                            <div class="visitor"><b>{{ visitor.firstName | capitalize }} {{ visitor.lastName | capitalize}}</b> - <i>{{ 'Price : ' | trans }} {{ visitor.rate /100 }} €</i></div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="payment">
+                    {% for message in app.flashes('notice') %}
+                        <div class="error-card">
+                            {{ message | trans }}
+                        </div>
+                    {% endfor %}
+                    <form id="payment_form" method="post">
+                        <div>
+                            <label for="email" >{{ 'Your email' | trans }}</label>
+                            <input type="email" name="email" value="a.painchault@gmail.com" required>
+                        </div>
+                        <div>
+                        </div>
+                            <label for="number" >{{ 'Your CB number' | trans }}</label>
+                            <input type="text" name="number" data-stripe="number" value="4242 4242 4242 4242" required>
+                            <label>{{ 'Expiration date' | trans }}</label>
+                                <div>
+                                    <label>{{ 'Month' | trans }}</label>
+                                    <select class="exp_month" name="exp_month" data-stripe="exp_month" required>
+                                        {% for i in 1..12 %}<option value="{{ i }}">{{ i }}</option>{% endfor %}
+                                    </select>
+                                    <label>{{ 'Year' | trans }}</label>
+                                        <select class="exp_year" name="exp_year" data-stripe="exp_year" required>
+                                        {% set year_start = "now"| date("Y") %}
+                                        {% set year_end = year_start + 10 %}
+                                        {% for year in year_start..year_end %}<option value="{{ year }}">{{ year }}</option>{% endfor %}
+                                    </select>
+                                </div>
+                            <div>
+                            <label for="exp_year" >{{ 'Security code' | trans }}</label>
+                            <input type="number" min="000" max="999" data-stripe="cvc" value="" required>
+                        </div>
+                        <div class="payment-pay">
+                            {{ 'Total price : ' | trans }} {{ (ticket.price)/100  }} €
+                            <button type="submit" class="btn">{{ 'Buy' | trans }}</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
+    <div id="modal" class="popup">{{ 'We contact the bank...' | trans }}</div>
+
+{% endblock %}
+
+{% block javascripts %}
+    <script src="https://js.stripe.com/v2/"></script>
+	<script src="{{ asset('build/payment.js') }}"></script>
+{% endblock %}

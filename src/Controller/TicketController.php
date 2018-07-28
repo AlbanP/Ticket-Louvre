@@ -7,6 +7,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Service\CheckDate;
 use App\Service\CalculVisitors;
 use App\Service\CheckNbVisitor;
+use App\Service\PaymentTicket;
 use App\Entity\Ticket;
 use App\Entity\Calendar;
 use App\Entity\Rate;
@@ -114,6 +115,41 @@ class TicketController extends Controller
                 'local' => $locale,
                 'nbVisitorDay' => $nbVisitorDay
             ));
+    }
+    /**
+     * @Route({"en" : "/payment", "fr" : "/paiement"}, name="payment", requirements={"_locale": "en|fr"})
+    */
+    public function payment(Request $request, PaymentTicket $payment)
+    {
+        $locale = $request->getLocale();
+        $ticket = $request->getSession()->get('ticket');
+        if (is_null($ticket->getNbVisitor())) {
+            return $this->redirectToRoute('selectVisitor');
+        }
+
+        if ($request->isMethod('POST')) {
+            $token = $request->request->get('stripeToken');
+            $email = $request->request->get('email');
+
+            $ticket->setEmail($email);
+            $dateVisit = $ticket->getDateVisit();
+            $nbVisitor = $ticket->getNbVisitor();
+            // Service payment Stripe
+            $response = $payment->stripe($token, $ticket, array(
+                "Email"             => $email,
+                "Nombre de Ticket"  => $nbVisitor,
+                "Date de visite"    => $dateVisit->format('d/m/Y')
+            ));
+            if ($response) {
+
+                return $this->redirectToRoute('showTicket');
+            }
+
+            return $this->redirectToRoute('payment');
+        }
+        return $this->render('ticket/payment.html.twig', array(
+            'local'     => $locale,
+            'ticket'    => $ticket));
     }
     /*
      * Change the locale for the current user
