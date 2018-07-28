@@ -1,0 +1,39 @@
+#ticket-container{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-self: center;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 10px;
+    margin-top : 30px;
+    margin-left: 20%;
+    margin-right: 20%;
+    padding: 20px;
+    .ticket-block{
+        margin-top: 20px;
+    }
+    .ticket-code{
+        font-weight: bold;
+        font-size: 20px;
+    }
+    #ticket-btn{
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        align-items: center;
+        margin-top: 40px;
+        margin-bottom: 10px;
+        a, button{
+            margin: 10px;
+        }
+    }
+    .ticket-visitor{
+        margin-top: 10px;
+    }
+}
+@media print {
+    .btn, footer {
+      display: none;
+    }
+}

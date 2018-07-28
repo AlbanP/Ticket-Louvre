@@ -116,6 +116,7 @@ class TicketController extends Controller
                 'nbVisitorDay' => $nbVisitorDay
             ));
     }
+    
     /**
      * @Route({"en" : "/payment", "fr" : "/paiement"}, name="payment", requirements={"_locale": "en|fr"})
     */
@@ -151,6 +152,24 @@ class TicketController extends Controller
             'local'     => $locale,
             'ticket'    => $ticket));
     }
+
+    /**
+     * @Route({"en" : "/ticket", "fr" : "/ticket"}, name="showTicket", requirements={"_locale": "en|fr"})
+    */
+    public function showTicket(Request $request)
+    {
+        $locale = $request->getLocale();
+        $ticket = $request->getSession()->get('ticket');
+        if (is_null($ticket->getBill())) {
+            return $this->redirectToRoute('payment');
+        }
+        $request->getSession()->clear();
+
+        return $this->render('ticket/showTicket.html.twig', array(
+            'local'     => $locale,
+            'ticket'    => $ticket));
+    }
+
     /*
      * Change the locale for the current user
      *

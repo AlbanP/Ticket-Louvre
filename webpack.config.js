@@ -18,6 +18,8 @@ Encore
     .addEntry('app', './assets/js/app.js')
     .addEntry('home', './assets/js/home.js')
     .addEntry('selectVisitor', './assets/js/visitor.js')
+    .addEntry('payment', './assets/js/stripe.js')
+    .addEntry('showTicket', './assets/js/print.js')
 
     // uncomment if you use TypeScript
     //.enableTypeScriptLoader()

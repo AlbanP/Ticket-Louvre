@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+
+	<div id="content" style="background : url({{ asset('img/louvre-ticket.jpg') }}) no-repeat; background-size: cover; background-position: center center;">
+
+		{{ include("ticket/step.html.twig") }}
+		
+		<div id="ticket-container">
+
+			<div class="ticket-block">{{ 'Thank you'| trans }}</div>
+
+			<div class="ticket-block">{{ 'Your Ticket is send by email to '| trans }}<b>{{ ticket.email }}</b></div>
+
+			<div class="date-day ticket-block" data-date-visit="{{ ticket.dateVisit | date('Y/m/d') }}">{{ 'Visit day : ' |trans }}<b>{{ ticket.dateVisit|localizeddate('none', 'none', null, null, 'EEEE d MMMM Y') }} {% if (ticket.halfDay == 1) %} {{ 'for half-day'|trans}} {% else %} {{ 'for all day'|trans }} {% endif %}</b></div>
+
+			<div class="ticket-block">{{ 'Your code for entrance : '| trans }}<span class="ticket-code">{{ ticket.code }}</span></div>
+
+			<div class="ticket-block">{{ 'For '| trans }} {% if (ticket.nbVisitor == 1) %} 1 {{ 'visitor' | trans }} {% else %} {{ ticket.nbVisitor }} {{ 'visitors' | trans }} {% endif %} :</div>
+			{% for visitor in ticket.visitors %}
+				<div class="ticket-visitor"> - <b>{{ visitor.firstName | capitalize }} {{ visitor.lastName | capitalize}}</b> - <i>{{ 'Price : '| trans }}{{ visitor.rate /100 }} €<i></div>
+			{% endfor %}
+
+			<div id="ticket-btn">
+				<button id="ticket-print" class="btn">{{ 'Print this message'| trans }}</button>
+				<a href="{{ path('home') }}" class="btn btn-info">{{ 'Back to home page'| trans }}</a>
+			</div>
+		</div>
+	</div>
+
+
+{% endblock %}
+
+{% block javascripts %}
+	<script src="{{ asset('build/showTicket.js') }}"></script>
+{% endblock %}
