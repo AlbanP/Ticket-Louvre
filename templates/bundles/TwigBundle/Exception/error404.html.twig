@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>{{ 'Page not found' | trans }}</h1>
+
+    <p>
+        {{ "The requested page couldn't be located. Checkout for any URL misspelling or" | trans }} <a href="{{ path('homepage') }}"></a> {{ 'return to the homepage.' | trans }}
+    </p>
+{% endblock %}
