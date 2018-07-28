@@ -1,6 +1,7 @@
 <?php
 namespace App\Service;
 
+use App\Service\Mailer;
 use App\Entity\Ticket;
 use App\Entity\Calendar;
 use App\Entity\Bill;
@@ -12,11 +13,13 @@ class PaymentTicket
     private $secretKey = 'sk_test_lZReZR3lqdyyQmSsCnmAUOtQ';
     private $current = 'eur';
     private $description = 'TicketLouvre';
+    private $mailer;
     private $session;
     private $em;
 
-    public function __construct(SessionInterface $session, EntityManagerInterface $em)
+    public function __construct(Mailer $mailer, SessionInterface $session, EntityManagerInterface $em)
     {
+        $this->mailer = $mailer;
         $this->session = $session;
         $this->em = $em;
     }

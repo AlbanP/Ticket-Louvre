@@ -1,0 +1,11 @@
+<h3>Erreur Stripe</h3>
+
+<p>Date : {{ 'now' | date('d/m/Y H:i') }}</p>
+
+<p>Message erreur : {{ error }}</p>
+
+<p>Information sur le Ticket : </p>
+
+<p>Email : {{ ticket.email }}</p>
+
+<p>Date de visite : {{ ticket.dateVisit | date('d/m/Y') }}</p>

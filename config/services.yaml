@@ -33,3 +33,11 @@ services:
         class: Twig_Extensions_Extension_Intl
         tags:
             - { name: twig.extension }
+
+    app\Event\TicketCreationListener:
+        tags:
+          - { name: doctrine.event_listener, event: postPersist }
+
+    app\Event\TicketMailerListener:
+        tags:
+          - { name: doctrine.event_listener, event: postUpdate }
