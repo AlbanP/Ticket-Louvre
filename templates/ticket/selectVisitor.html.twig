@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+
+	<div id="content" style="background : url({{ asset('img/louvre-visitor.jpg') }}) no-repeat; background-size: cover; background-position: center center;">
+
+		{{ include("ticket/step.html.twig") }}
+	
+		<div id="visitors-container" class="visitor-container">
+			<div class="date-visit">
+				<div class="date-day" data-date-visit="{{ ticket.dateVisit | date('Y/m/d') }}">{{ 'Visit day : ' |trans }}{{ ticket.dateVisit|localizeddate('none', 'none', null, null, 'EEEE d MMMM Y') }} {% if (ticket.halfDay == 1) %} {{ 'for half-day'|trans}} {% else %} {{ 'for all day'|trans }} {% endif %}</div>
+			
+				<div><a href="{{ path('home') }}#calendar" class="btn">{{ 'Choose another date'|trans }}</a></div>
+				{% for message in app.flashes('notice') %}
+                    <div class="error-card">
+                        {{ message | trans }}
+                    </div>
+                {% endfor %}
+			</div>
+			
+			<div class="visitor-select" data-delete="{{ 'Delete visitor'| trans }}" data-price="{{ 'Price : '| trans }}">
+				<div class="">
+					{{ form_start(form, {'attr': {'class': ''}}) }}
+
+					{{ form_errors(form) }}
+
+					{{ form_row(form.visitors) }}
+					<div class="visitor-add"><a href="#" id="add_visitor" class="btn btn-default">{{ 'Add visitor'|trans }}</a></div>
+				</div>
+			
+			</div>
+				
+			<div class="visitor-valid">
+				<span>{{ 'Total price : ' | trans }}<span id="total_price"></span> €</span> 
+				<button id="btn-calcul" class="btn" style="display:none">{{ 'Calcul'|trans}}</button>
+				{{ form_widget(form.pay, {'attr': {'class': 'btn'}}) }}
+				{{ form_rest(form) }}
+
+				{{ form_end(form) }}
+			</div>
+
+			</div>
+
+		</div>
+
+	</div>
+
+
+{% endblock %}
+
+{% block javascripts %}
+	<script src="{{ asset('build/selectVisitor.js') }}"></script>
+{% endblock %}
